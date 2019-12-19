@@ -437,122 +437,12 @@ void orderbyday(int n,struct list_student list[n])
 	
 	show_list(n,list);
 }
-show_list_just_betwen_to_date(int n,struct list_student list[n])
-{
-	int j;
-	int i;
-
-	int minday,minMois,minAnnee;
-	int maxday,maxMois,maxAnnee;
-	i = 0;
-
-	printf("donner min date");
-	scanf("%i",&minday);
-	scanf("%i",&minMois);
-	scanf("%i",&minAnnee);
-	printf("donner max date");
-	scanf("%i",&maxday);
-	scanf("%i",&maxMois);
-	scanf("%i",&maxAnnee);
-
-	while(i < n)
-	{
-		if(list[i].year > minAnnee && list[i].year < maxAnnee )
-		{
-			printf("\ncode = %i | name = %s  | age =  %i   |  note1 = %i |  note2 = %i |  note3 = %i | moyen = %.2f | date of pirth : %i / %i / %i \n\n",
-        				i + 1,list[i].name,list[i].age,list[i].note1,list[i].note2,list[i].note3,list[i].moy,list[i].date,list[i].month,list[i].year);
-		}
-		else if(list[i].year == minAnnee)
-		{
-			
-			if(list[i].month > minMois && list[i].month < maxMois )
-			{
-				printf("\ncode = %i | name = %s  | age =  %i   |  note1 = %i |  note2 = %i |  note3 = %i | moyen = %.2f | date of pirth : %i / %i / %i \n\n",
-        				i + 1,list[i].name,list[i].age,list[i].note1,list[i].note2,list[i].note3,list[i].moy,list[i].date,list[i].month,list[i].year);
-			}
-			else if(list[i].month == minMois)
-			{
-				printf("yes");
-				if(list[i].date >= minday && list[i].date <= maxday )
-				{
-					printf("\ncode = %i | name = %s  | age =  %i   |  note1 = %i |  note2 = %i |  note3 = %i | moyen = %.2f | date of pirth : %i / %i / %i \n\n",
-        				i + 1,list[i].name,list[i].age,list[i].note1,list[i].note2,list[i].note3,list[i].moy,list[i].date,list[i].month,list[i].year);
-				}
-			}
-		}
-		i++;
-	}
-}
-
-void successful(int n,struct list_student list[n])
-{
-	int i,code;
-	i = 0;
-
-	
-	show_list(n,list);
-
-	printf("donner code d'etudient");
-	scanf("%i",&code);
-
-	if(list[code - 1].moy <= 8)
-	{
-		printf("ajourne");
-		printf("\n");
-	}
-	else if (list[code - 1].moy >= 10 && list[code - 1].moy < 12)
-	{
-		printf("Admis");
-		printf("\n");
-	}
-	else if (list[code - 1].moy >= 12 && list[code - 1].moy < 14)
-	{
-		printf("Admis Bien");
-		printf("\n");
-	}
-	else if (list[code - 1].moy >= 14 && list[code - 1].moy < 16)
-	{
-		printf("Bien");
-		printf("\n");
-	}
-	else if (list[code - 1].moy >= 16 && list[code - 1].moy < 20)
-	{
-		printf("T.Bien");
-		printf("\n");
-	}
-
-	
-
-	
-}
-
-void search_student(int n,struct list_student list[n])
-{
-	int i,r;
-
-	char search[100];
-
-	printf("give name of student you will search");
-	scanf("%s",search);
-	
-	i = 0;
-
-	while (i < n)
-	{
-		r = strcmp(list[i].name ,search);
-		if(r == 0)
-		{
-			printf("\ncode = %i | name = %s  | age =  %i   |  note1 = %i |  note2 = %i |  note3 = %i | moyen = %.2f | date of pirth : %i / %i / %i \n\n",
-        				i + 1,list[i].name,list[i].age,list[i].note1,list[i].note2,list[i].note3,list[i].moy,list[i].date,list[i].month,list[i].year);
-		}
-		i++;
-	}
-	
-}
 int main()
 {
 	
-	int n,i,max,option = -1;
+	int n,i,j,var,max,option = -1;
+	
+	char str[100];
  
     printf("==========================================\n\n");
 	printf("             |   welcome   |              \n\n");
@@ -561,26 +451,10 @@ int main()
     printf("give numbers the students ");
     scanf("%i",&n);
 
-
     
     struct list_student list[100];
-   /** 
-    list[0].date = 1;
-    list[0].month = 1;
-    list[0].year = 2000;
     
-    list[1].date = 2;
-    list[1].month = 1;
-    list[1].year = 2000;
     
-    list[2].date = 3;
-    list[2].month = 2;
-    list[2].year = 2000;
-    
-    list[3].date = 5;
-    list[3].month = 3;
-    list[3].year = 2000;
-    */
 	give_info(n,list);
 	
     while (option != 0)
@@ -613,16 +487,7 @@ int main()
 		printf("8 : list of student has moy > 10");
     	printf("\n");
 
-		printf("9 : order list of student by birthday");
-    	printf("\n");
-    	
-    	printf("10 : date");
-    	printf("\n");
-    	
-    	printf("11 : student level");
-    	printf("\n");
-
-		printf("12 : search of student");
+		printf("9 : order list of student by birday");
     	printf("\n");
 		    	
     	printf("0 : Go out");
@@ -700,21 +565,123 @@ int main()
 		else if(option == 9)
 		{
 			printf("=============================================================\n");
-			printf("           	|   order list by date of pirth  |		          \n");
+			printf("           	|   order list by birthday  |		          \n");
     		printf("=============================================================\n\n");
-			orderbyday(n,list);
-		}
-		else if(option == 10)
-		{
-			show_list_just_betwen_to_date(n,list);
-		}
-		else if(option == 11)
-		{
-			successful(n,list);
-		}
-		else if (option == 12)
-		{
-			search_student(n,list);
+			//orderbyday(n,list);
+			j = 0;
+			while(j < n)
+			{
+				i = 0;
+				while(i < n - 1)
+				{
+							
+						if(list[i].year > list[i + 1].year)
+						{
+
+								strcpy(str,list[i].name);
+								strcpy(list[i].name,list[i + 1].name);
+								strcpy(list[i + 1].name,str);
+								
+								var = list[i].age;
+								list[i].age = list[i + 1].age;
+								list[i + 1].age = var;
+								
+								var = list[i].note1;
+								list[i].note1 = list[i + 1].note1;
+								list[i + 1].note1 = var;
+
+								var = list[i].note2;
+								list[i].note2 = list[i + 1].note2;
+								list[i + 1].note2 = var;
+
+								var = list[i].note3;
+								list[i].note3 = list[i + 1].note3;
+								list[i + 1].note3 = var;
+
+								var = list[i].date;
+								list[i].date = list[i + 1].date;
+								list[i + 1].date = var;
+
+								var = list[i].month;
+								list[i].month = list[i + 1].month;
+								list[i + 1].month = var;
+
+								var = list[i].year;
+								list[i].year = list[i + 1].year;
+								list[i + 1].year = var;
+						}
+						else if(list[i].month > list[i + 1].month)
+						{
+								strcpy(str,list[i].name);
+								strcpy(list[i].name,list[i + 1].name);
+								strcpy(list[i + 1].name,str);
+								
+								var = list[i].age;
+								list[i].age = list[i + 1].age;
+								list[i + 1].age = var;
+								
+								var = list[i].note1;
+								list[i].note1 = list[i + 1].note1;
+								list[i + 1].note1 = var;
+
+								var = list[i].note2;
+								list[i].note2 = list[i + 1].note2;
+								list[i + 1].note2 = var;
+
+								var = list[i].note3;
+								list[i].note3 = list[i + 1].note3;
+								list[i + 1].note3 = var;
+
+								var = list[i].date;
+								list[i].date = list[i + 1].date;
+								list[i + 1].date = var;
+
+								var = list[i].month;
+								list[i].month = list[i + 1].month;
+								list[i + 1].month = var;
+
+								var = list[i].year;
+								list[i].year = list[i + 1].year;
+								list[i + 1].year = var;
+						}
+						else if(list[i].date > list[i + 1].date)
+						{
+								strcpy(str,list[i].name);
+								strcpy(list[i].name,list[i + 1].name);
+								strcpy(list[i + 1].name,str);
+								
+								var = list[i].age;
+								list[i].age = list[i + 1].age;
+								list[i + 1].age = var;
+								
+								var = list[i].note1;
+								list[i].note1 = list[i + 1].note1;
+								list[i + 1].note1 = var;
+
+								var = list[i].note2;
+								list[i].note2 = list[i + 1].note2;
+								list[i + 1].note2 = var;
+
+								var = list[i].note3;
+								list[i].note3 = list[i + 1].note3;
+								list[i + 1].note3 = var;
+
+								var = list[i].date;
+								list[i].date = list[i + 1].date;
+								list[i + 1].date = var;
+
+								var = list[i].month;
+								list[i].month = list[i + 1].month;
+								list[i + 1].month = var;
+
+								var = list[i].year;
+								list[i].year = list[i + 1].year;
+								list[i + 1].year = var;
+						}
+					i++;
+				}
+				j++;
+			}
 		}
 		else
 		{
@@ -732,4 +699,3 @@ int main()
     return 0;
 }
  
-
